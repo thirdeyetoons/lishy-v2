@@ -22,10 +22,16 @@
     <script>
         document.getElementById('btn').onclick = async () => {
             const url = document.getElementById('url').value;
+            // const res = await fetch('/api/shorten', {
+            //     method: 'POST',
+            //     headers: {'Content-Type': 'application/json'},
+            //     body: JSON.stringify({ url })
+            // });
+            // const slug = document.getElementById('slug').value;
             const res = await fetch('/api/shorten', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ url })
+                body: JSON.stringify({ url, slug })
             });
             const data = await res.json();
             if (data.shortUrl) {
