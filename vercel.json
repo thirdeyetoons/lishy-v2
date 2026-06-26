@@ -1,5 +1,11 @@
 {
+  {
   "rewrites": [
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/refund", "destination": "/refund.html" },
+    { "source": "/terms", "destination": "/terms.html" },
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/:id", "destination": "/api/[id].js" }
   ],
