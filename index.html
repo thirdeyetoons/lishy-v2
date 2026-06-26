@@ -33,26 +33,27 @@
 
     <script>
         document.getElementById('btn').onclick = async () => {
-            const url = document.getElementById('url').value;
-            // const res = await fetch('/api/shorten', {
-            //     method: 'POST',
-            //     headers: {'Content-Type': 'application/json'},
-            //     body: JSON.stringify({ url })
-            // });
-            // const slug = document.getElementById('slug').value;
-            const res = await fetch('/api/shorten', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ url, slug })
-            });
-            const data = await res.json();
-            if (data.shortUrl) {
-                const link = document.getElementById('link');
-                link.href = data.shortUrl;
-                link.innerText = data.shortUrl;
-                document.getElementById('result').classList.remove('hidden');
-            }
-        };
+    const url = document.getElementById('url').value;
+    const slug = document.getElementById('slug').value; // Get the slug
+
+    const res = await fetch('/api/shorten', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        // Ensure both fields are sent
+        body: JSON.stringify({ url, slug }) 
+    });
+
+    const data = await res.json();
+    
+    if (res.ok) {
+        const link = document.getElementById('link');
+        link.href = data.shortUrl;
+        link.innerText = data.shortUrl;
+        document.getElementById('result').classList.remove('hidden');
+    } else {
+        alert("Error: " + data.error); // This will alert "Slug already taken" if it fails
+    }
+};
     </script>
 </body>
 </html>
