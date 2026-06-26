@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lishyy Shortener</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white flex items-center justify-center min-h-screen">
+    <div class="bg-slate-800 p-8 rounded-xl shadow-2xl w-full max-w-md text-center">
+        <h1 class="text-2xl font-bold mb-6">Lishyy URL Shortener</h1>
+        <input id="url" type="url" placeholder="https://example.com" 
+               class="w-full p-3 rounded bg-slate-700 border border-slate-600 mb-4 focus:outline-none">
+        <button id="btn" class="w-full bg-blue-500 hover:bg-blue-600 p-3 rounded font-bold transition">Shorten URL</button>
+        <div id="result" class="hidden mt-6 p-4 bg-slate-700 rounded">
+            <p class="text-sm mb-2">Your shortened link:</p>
+            <a id="link" target="_blank" class="text-blue-400 underline break-all"></a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('btn').onclick = async () => {
+            const url = document.getElementById('url').value;
+            const res = await fetch('/api/shorten', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ url })
+            });
+            const data = await res.json();
+            if (data.shortUrl) {
+                const link = document.getElementById('link');
+                link.href = data.shortUrl;
+                link.innerText = data.shortUrl;
+                document.getElementById('result').classList.remove('hidden');
+            }
+        };
+    </script>
+</body>
+</html>
